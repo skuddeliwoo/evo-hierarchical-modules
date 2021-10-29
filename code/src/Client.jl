@@ -5,14 +5,52 @@ g = zeros(N) # initialize genotype
 B = zeros(N,N) # init regulation coeff matrix
 
 nEpisodes = 1000 # lit: 100000
+nEvoSteps = 1000 # lit: 1000
+
 
 for episode in 1:nEpisodes
-    # init environment
-    env = changeEnv()
+    for evoStep in 1:nEvoSteps
+        # init environment
+        env = changeEnv()
+        # calc fitness -> old fitness
+
+        # mutate
+
+        # iterate over dev steps
+        # calc mutant fitness
+        # compare fitness
+    end
+
 
     # iterate over evo steps
 
     # iterate over dev steps
+
+function calcBenefit(p, env)
+    res = 0.0
+
+    # loop over modules
+    for i in 1:nModules
+        # get expression levels of this module
+        subP = p[((i - 1) * nModuleSize) + 1:i*nModuleSize]
+        # sum up all module benefits
+        res += calcModuleBenefit(subP, env[i])
+    end # for
+
+    return (res / nModules)
+end
+
+function calcModuleBenefit(subP, subEnv)
+    x = sum(subP) / nModuleSize
+    return max(-x * subEnv[1], x * subEnv[2])
+end
+
+function calcCost(B)
+    return sum(abs(B)) / (N * N)
+end
+
+function calcFitness(p, B, env, λ=0.1)
+    return calcBenefit(p, env) - λ * calcCost(B)
 end
 
 function changeEnv(z=0.95, nModules=nModules)
