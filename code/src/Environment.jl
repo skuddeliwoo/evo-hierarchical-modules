@@ -32,7 +32,6 @@ function calcFitness(p, B, env, λ=0.1)
 end
 
 function changeEnv(z=0.95, nModules=nModules)
-    println("chenv")
     # 4 types of module env:
     # d_: dual peaked, s_: single peak,
     # _Pos: global optimum lies in

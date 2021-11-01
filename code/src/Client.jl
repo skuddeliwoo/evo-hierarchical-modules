@@ -1,15 +1,16 @@
 include("./Params.jl")
 
 import .Environment
-
-
-B[:,:,end]
+import .Development
 
 for episode in 1:nEpisodes
     println("episode $episode of $nEpisodes")
     # init environment
     env = Environment.changeEnv()
     # develop phenotype
+    p = Development.developPhenotype(g[:,end], B[:,:,end])
+
+    fitness = calcFitness(p, B[:,:,end], env)
     # calc fitness -> old fitness
     for evoStep in 1:nEvoSteps
 
