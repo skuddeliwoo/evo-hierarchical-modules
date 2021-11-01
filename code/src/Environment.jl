@@ -1,3 +1,9 @@
+module Environment
+include("./Params.jl")
+
+export changeEnv
+export calcFitness
+
 function calcBenefit(p, env)
     res = 0.0
 
@@ -26,6 +32,7 @@ function calcFitness(p, B, env, λ=0.1)
 end
 
 function changeEnv(z=0.95, nModules=nModules)
+    println("chenv")
     # 4 types of module env:
     # d_: dual peaked, s_: single peak,
     # _Pos: global optimum lies in
@@ -54,3 +61,4 @@ function changeEnv(z=0.95, nModules=nModules)
     return rolledEnvs
 
 end
+end  # module Environment
