@@ -1,4 +1,6 @@
 module Environment
+
+using ..Types
 include("./Params.jl")
 
 export changeEnv
@@ -24,7 +26,7 @@ function calcModuleBenefit(subP, subEnv)
 end
 
 function calcCost(B)
-    return sum(abs(B)) / (N * N)
+    return sum(abs.(B)) / (N * N)
 end
 
 function calcFitness(p, B, env, λ=0.1)

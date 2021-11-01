@@ -1,4 +1,7 @@
+
 module Development
+
+using ..Types
 
 export developPhenotype
 
@@ -10,11 +13,12 @@ export developPhenotype
 T = 10
 
 
-function developPhenotype(g, B)
+function developPhenotype(individual::Individual)::Vector{Float64}
     # p(0) = g
-    p = g
+    p = individual.g
+    B = individual.B
 
-    # p_i(t+1) = p_i(t)*(1-τ) + σ(sum_j(B_{ij}*p_j(t)))
+    # p_i(t+1) = p_i(t)*(1-τ) + σ(sum_j(B_ij*p_j(t)))
     for t in 1:T
         p = ( (1 - τ) * p ) + ( σ.(B * p) )
     end
