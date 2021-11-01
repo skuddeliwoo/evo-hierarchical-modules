@@ -3,27 +3,36 @@ include("./Params.jl")
 using .Types
 import .Environment
 import .Development
+import .Mutation
 
 for episode in 1:nEpisodes
     println("episode $episode of $nEpisodes")
     # init environment
     env = Environment.changeEnv()
+
     # develop phenotype
     p = Development.developPhenotype(individuals[end])
 
-    fitness = Environment.calcFitness(p, individuals[end].B, env)
     # calc fitness -> old fitness
-    for evoStep in 1:nEvoSteps
+    fitness = Environment.calcFitness(p, individuals[end].B, env)
 
+    for evoStep in 1:nEvoSteps
         # mutate
+        mutant::Individual = Mutation.mutate(individuals[end])
 
         # iterate over dev steps
+        pMutant = Development.developPhenotype(mutant)
+
         # calc mutant fitness
+        fitnessMutant = Environment.calcFitness(pMutant, mutant.B, env)
+
         # compare fitness
-        # store winner fitness as old fitness
+        if (fitnessMutant > fitness)
+            push!(individuals, mutant)
+            # store winner fitness as old fitness
+            fitness = fitnessMutant
+        else
+            push!(individuals, individuals[end])
+        end
     end
-    # iterate over evo steps
-
-    # iterate over dev steps
-
 end
