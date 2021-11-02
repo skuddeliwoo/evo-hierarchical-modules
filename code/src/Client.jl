@@ -6,7 +6,9 @@ import .Development
 import .Mutation
 
 for episode in 1:nEpisodes
-    println("episode $episode of $nEpisodes")
+    if (episode % 20 == 0)
+        println("episode $episode of $nEpisodes")
+    end
     # init environment
     env = Environment.changeEnv()
 
@@ -31,8 +33,6 @@ for episode in 1:nEpisodes
             push!(individuals, mutant)
             # store winner fitness as old fitness
             fitness = fitnessMutant
-        else
-            push!(individuals, individuals[end])
         end
     end
 end

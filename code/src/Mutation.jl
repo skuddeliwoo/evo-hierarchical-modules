@@ -5,7 +5,7 @@ include("./Params.jl")
 
 function mutate(indivdual::Individual)::Individual
 
-    mutant::Individual = Individual(indivdual.g, indivdual.B)
+    mutant::Individual = Individual(copy(indivdual.g), copy(indivdual.B))
 
     if (rand() > 0.5) # mutate g
         # choose single entry and set to -1 or 1
