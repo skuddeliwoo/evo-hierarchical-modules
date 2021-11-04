@@ -5,9 +5,13 @@ import .Environment
 import .Development
 import .Mutation
 
+println("start simulation: $nEpisodes episodes with $nEvoSteps evolutionairy steps...")
+println("status: episode 001 of $nEpisodes")
+
 for episode in 1:nEpisodes
-    if (episode % 20 == 0)
-        println("episode $episode of $nEpisodes")
+    if (episode % 100 == 0)
+        global individuals = [individuals[end]]
+        println("status: episode $episode of $nEpisodes")
     end
     # init environment
     env = Environment.changeEnv()
@@ -36,3 +40,8 @@ for episode in 1:nEpisodes
         end
     end
 end
+
+
+using CSV, DataFrames, Dates
+timestamp = now()
+CSV.write("run_$timestamp epi$nEpisodes.csv", DataFrame(individuals[end].B, :auto))
