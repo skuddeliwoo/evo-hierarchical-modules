@@ -15,7 +15,7 @@ T = 10
 
 function developPhenotype(individual::Individual)::Vector{Float64}
     # p(0) = g
-    p = individual.g
+    p = copy(individual.g)
     B = individual.B
 
     # p_i(t+1) = p_i(t)*(1-τ) + σ(sum_j(B_ij*p_j(t)))
